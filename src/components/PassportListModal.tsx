@@ -119,7 +119,9 @@ export const PassportListModal: React.FC<PassportListModalProps> = ({
             >
               <option value="all">전체 ({participants.length}명)</option>
               <option value="student">학생 ({participants.filter((p) => !p.isStaff).length}명)</option>
-              <option value="staff">인솔자 ({participants.filter((p) => p.isStaff).length}명)</option>
+              {participants.some((p) => p.isStaff) && (
+                <option value="staff">인솔자 ({participants.filter((p) => p.isStaff).length}명)</option>
+              )}
             </select>
           </div>
 

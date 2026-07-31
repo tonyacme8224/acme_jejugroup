@@ -18,7 +18,8 @@ import { StudentPassportModal } from './components/StudentPassportModal';
 import { NoticeModal } from './components/NoticeModal';
 import { PassportListModal } from './components/PassportListModal';
 import { StudentEmergencyModal } from './components/StudentEmergencyModal';
-import { UserCheck, ShieldCheck, Lock, Phone, BookOpen, AlertTriangle, FileText, ChevronRight } from 'lucide-react';
+import { HealthNoticeModal } from './components/HealthNoticeModal';
+import { UserCheck, ShieldCheck, Lock, Phone, BookOpen, AlertTriangle, FileText, ChevronRight, HeartPulse } from 'lucide-react';
 
 export default function App() {
   const [activeTab, setActiveTab] = useState<TabType>('home');
@@ -28,9 +29,10 @@ export default function App() {
   const [participants, setParticipants] = useState<Participant[]>(() => {
     try {
       const saved = localStorage.getItem('gec_participants');
-      return saved ? JSON.parse(saved) : INITIAL_PARTICIPANTS;
+      const list: Participant[] = saved ? JSON.parse(saved) : INITIAL_PARTICIPANTS;
+      return list.filter((p) => !p.isStaff && p.nameKr !== '박인솔' && p.nameKr !== '김팀장');
     } catch {
-      return INITIAL_PARTICIPANTS;
+      return INITIAL_PARTICIPANTS.filter((p) => !p.isStaff && p.nameKr !== '박인솔' && p.nameKr !== '김팀장');
     }
   });
 
@@ -70,6 +72,7 @@ export default function App() {
   const [isNoticeModalOpen, setIsNoticeModalOpen] = useState(false);
   const [isPassportListModalOpen, setIsPassportListModalOpen] = useState(false);
   const [isStudentEmergencyModalOpen, setIsStudentEmergencyModalOpen] = useState(false);
+  const [isHealthModalOpen, setIsHealthModalOpen] = useState(false);
 
   // Sync state to localStorage
   useEffect(() => {
@@ -168,6 +171,7 @@ export default function App() {
               onOpenAuthModal={() => setIsAuthModalOpen(true)}
               onOpenPassportListModal={() => setIsPassportListModalOpen(true)}
               onOpenEmergencyModal={() => setIsStudentEmergencyModalOpen(true)}
+              onOpenHealthModal={() => setIsHealthModalOpen(true)}
               currentVerifiedUser={currentVerifiedUser}
               isAdminLoggedIn={isAdminLoggedIn}
               onSelectScheduleDay={(dayNum) => setSelectedScheduleDay(dayNum)}
@@ -198,6 +202,26 @@ export default function App() {
                 />
               ) : (
                 <div className="space-y-3 pb-20">
+                  {/* Health & Allergy Quick Card */}
+                  <div className="bg-white rounded-2xl p-4 border border-slate-200 shadow-xs space-y-2">
+                    <div className="flex items-center space-x-2">
+                      <div className="w-8 h-8 rounded-xl bg-rose-100 text-rose-800 flex items-center justify-center font-bold">
+                        <HeartPulse className="w-4 h-4 text-rose-600" />
+                      </div>
+                      <div>
+                        <h3 className="text-sm font-black text-slate-900">학생 건강 특이사항 & 알레르기 관리</h3>
+                        <p className="text-[11px] text-slate-500">학생별 알레르기, 주요 증세 및 주의사항 확인</p>
+                      </div>
+                    </div>
+                    <button
+                      onClick={() => setIsHealthModalOpen(true)}
+                      className="w-full py-2.5 bg-rose-600 hover:bg-rose-700 text-white font-bold text-xs rounded-xl transition-colors flex items-center justify-center space-x-1"
+                    >
+                      <span>건강 특이사항 명단 보기</span>
+                      <ChevronRight className="w-4 h-4" />
+                    </button>
+                  </div>
+
                   {/* Passport Info Quick Button */}
                   <div className="bg-white rounded-2xl p-4 border border-slate-200 shadow-xs space-y-2">
                     <div className="flex items-center space-x-2">
@@ -206,7 +230,7 @@ export default function App() {
                       </div>
                       <div>
                         <h3 className="text-sm font-black text-slate-900">전체 참가자 여권정보 명단</h3>
-                        <p className="text-[11px] text-slate-500">로그인 없이 전체 22명 여권정보 즉시 확인</p>
+                        <p className="text-[11px] text-slate-500">로그인 없이 전체 {participants.length}명 여권정보 즉시 확인</p>
                       </div>
                     </div>
                     <button
@@ -221,8 +245,8 @@ export default function App() {
                   {/* Student & Guardian Emergency Contacts Quick Button */}
                   <div className="bg-white rounded-2xl p-4 border border-slate-200 shadow-xs space-y-2">
                     <div className="flex items-center space-x-2">
-                      <div className="w-8 h-8 rounded-xl bg-rose-100 text-rose-800 flex items-center justify-center font-bold">
-                        <Phone className="w-4 h-4 text-rose-600" />
+                      <div className="w-8 h-8 rounded-xl bg-amber-100 text-amber-800 flex items-center justify-center font-bold">
+                        <Phone className="w-4 h-4 text-amber-600" />
                       </div>
                       <div>
                         <h3 className="text-sm font-black text-slate-900">학생 & 보호자 비상연락망</h3>
@@ -231,7 +255,7 @@ export default function App() {
                     </div>
                     <button
                       onClick={() => setIsStudentEmergencyModalOpen(true)}
-                      className="w-full py-2.5 bg-rose-600 hover:bg-rose-700 text-white font-bold text-xs rounded-xl transition-colors flex items-center justify-center space-x-1"
+                      className="w-full py-2.5 bg-slate-900 hover:bg-slate-800 text-white font-bold text-xs rounded-xl transition-colors flex items-center justify-center space-x-1"
                     >
                       <span>비상연락망 전체보기</span>
                       <ChevronRight className="w-4 h-4" />
@@ -301,6 +325,12 @@ export default function App() {
         <StudentEmergencyModal
           isOpen={isStudentEmergencyModalOpen}
           onClose={() => setIsStudentEmergencyModalOpen(false)}
+          participants={participants}
+        />
+
+        <HealthNoticeModal
+          isOpen={isHealthModalOpen}
+          onClose={() => setIsHealthModalOpen(false)}
           participants={participants}
         />
       </div>

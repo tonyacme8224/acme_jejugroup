@@ -148,7 +148,7 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({
         </div>
 
         <p className="text-xs text-slate-300">
-          ⚠️ 개인정보 보호: 참가자 22명의 여권번호, 연락처, 보호자 정보가 포함되어 있습니다. 단체방 외부 유출에 유의바랍니다.
+          ⚠️ 개인정보 보호: 참가자 {participants.length}명의 여권번호, 연락처, 보호자 정보가 포함되어 있습니다. 단체방 외부 유출에 유의바랍니다.
         </p>
 
         {/* Global Privacy Toggle */}
@@ -176,7 +176,7 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({
             adminTab === 'participants' ? 'bg-slate-900 text-white shadow-xs' : 'hover:text-slate-950'
           }`}
         >
-          여권/참가자 (22명)
+          여권/참가자 ({participants.length}명)
         </button>
         <button
           onClick={() => setAdminTab('emergency')}
@@ -226,9 +226,11 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({
                 onChange={(e) => setFilterRole(e.target.value as any)}
                 className="text-xs font-bold bg-slate-100 border border-slate-200 rounded-xl px-2.5 py-2 text-slate-800"
               >
-                <option value="all">전체 (22명)</option>
-                <option value="student">학생 (20명)</option>
-                <option value="staff">인솔자 (2명)</option>
+                <option value="all">전체 ({participants.length}명)</option>
+                <option value="student">학생 ({participants.filter((p) => !p.isStaff).length}명)</option>
+                {participants.some((p) => p.isStaff) && (
+                  <option value="staff">인솔자 ({participants.filter((p) => p.isStaff).length}명)</option>
+                )}
               </select>
             </div>
 

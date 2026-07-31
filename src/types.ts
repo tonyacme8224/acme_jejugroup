@@ -20,6 +20,8 @@ export interface Participant {
   guardianRelation: string;
   guardianPhone: string;
   allergies?: string;
+  symptoms?: string;
+  precautions?: string;
   flightMeal?: string;
   levelTestScore?: string;
 }

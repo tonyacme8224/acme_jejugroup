@@ -18,6 +18,7 @@ import {
   Users,
   Copy,
   Check,
+  HeartPulse,
 } from 'lucide-react';
 
 interface HomeTabProps {
@@ -25,6 +26,7 @@ interface HomeTabProps {
   onOpenAuthModal: () => void;
   onOpenPassportListModal: () => void;
   onOpenEmergencyModal: () => void;
+  onOpenHealthModal?: () => void;
   currentVerifiedUser: Participant | null;
   isAdminLoggedIn: boolean;
   onSelectScheduleDay?: (dayNumber: number) => void;
@@ -35,6 +37,7 @@ export const HomeTab: React.FC<HomeTabProps> = ({
   onOpenAuthModal,
   onOpenPassportListModal,
   onOpenEmergencyModal,
+  onOpenHealthModal,
   currentVerifiedUser,
   isAdminLoggedIn,
   onSelectScheduleDay,
@@ -195,7 +198,26 @@ export const HomeTab: React.FC<HomeTabProps> = ({
         </button>
       </div>
 
-      {/* 4. EMERGENCY CALL QUICK ACTIONS */}
+      {/* 4. HEALTH & ALLERGY NOTICE QUICK CARD */}
+      <div className="bg-gradient-to-r from-rose-500 to-amber-500 text-white rounded-2xl p-4 shadow-sm space-y-2">
+        <div className="flex items-center justify-between">
+          <div className="flex items-center space-x-2">
+            <HeartPulse className="w-5 h-5 text-rose-100" />
+            <div>
+              <h3 className="text-sm font-black tracking-tight">학생 건강 특이사항 & 알레르기 관리</h3>
+              <p className="text-[11px] text-rose-100 font-medium">김미소, 김현경 등 학생별 증세 및 주의사항</p>
+            </div>
+          </div>
+          <button
+            onClick={onOpenHealthModal}
+            className="bg-white text-rose-700 font-extrabold text-xs px-3 py-1.5 rounded-xl shadow-xs hover:bg-rose-50 transition-colors shrink-0"
+          >
+            확인하기
+          </button>
+        </div>
+      </div>
+
+      {/* 5. EMERGENCY CALL QUICK ACTIONS */}
       <div className="bg-white rounded-2xl p-4 shadow-sm border border-slate-200">
         <div className="flex items-center justify-between mb-3">
           <div className="flex items-center space-x-2">
