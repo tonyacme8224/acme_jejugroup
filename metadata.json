@@ -1,0 +1,6 @@
+{
+  "name": "글로벌 영어 챌린지 캠프",
+  "description": "2026 글로벌 영어 챌린지 캠프(말레이시아·싱가포르) 모바일 웹 핸드북",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
