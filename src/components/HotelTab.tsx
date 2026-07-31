@@ -195,7 +195,9 @@ export const HotelTab: React.FC<HotelTabProps> = ({
             <div className="grid grid-cols-2 gap-2 text-xs pt-1">
               <div className="bg-white p-2.5 rounded-lg border border-emerald-100">
                 <span className="text-[10px] text-slate-400 font-medium">배정 객실</span>
-                <p className="font-extrabold text-emerald-800 text-sm mt-0.5">{searchedParticipant.roomMalaysia}</p>
+                <p className="font-extrabold text-emerald-800 text-sm mt-0.5">
+                  {activeHotelTab === 'my' ? searchedParticipant.roomMalaysia : '미확정'}
+                </p>
               </div>
               <div className="bg-white p-2.5 rounded-lg border border-emerald-100">
                 <span className="text-[10px] text-slate-400 font-medium">룸메이트</span>
@@ -204,7 +206,7 @@ export const HotelTab: React.FC<HotelTabProps> = ({
             </div>
 
             <p className="text-[11px] text-slate-600 pt-1">
-              📍 숙소: {currentHotel.nameKr} (말레이시아 조호바루)
+              📍 숙소: {currentHotel.nameKr} ({currentHotel.country})
             </p>
           </div>
         )}
@@ -221,20 +223,22 @@ export const HotelTab: React.FC<HotelTabProps> = ({
         <div className="flex items-center justify-between border-b border-slate-100 pb-3">
           <div>
             <h3 className="text-sm font-bold text-slate-900">전체 객실 배정표</h3>
-            <p className="text-xs text-slate-500">뉴욕호텔 조호바루 (말레이시아)</p>
+            <p className="text-xs text-slate-500">{currentHotel.nameKr} ({currentHotel.country})</p>
           </div>
           <span className="text-[10px] bg-slate-100 text-slate-700 px-2.5 py-1 rounded-full font-bold">
-            학생 2인1실 10개 객실 배정
+            {currentHotel.roomsCount}
           </span>
         </div>
 
         {/* Singapore Room Notice Banner */}
-        <div className="bg-sky-50 border border-sky-200 rounded-xl p-3 text-xs text-sky-900 flex items-start space-x-2">
-          <Info className="w-4 h-4 text-sky-600 shrink-0 mt-0.5" />
-          <p className="leading-snug">
-            <strong>싱가포르 객실 안내:</strong> 머큐어 싱가포르 티릿 호텔 객실은 현지 도착 및 체크인 당일 최종 업데이트됩니다.
-          </p>
-        </div>
+        {activeHotelTab === 'sg' && (
+          <div className="bg-sky-50 border border-sky-200 rounded-xl p-3 text-xs text-sky-900 flex items-start space-x-2">
+            <Info className="w-4 h-4 text-sky-600 shrink-0 mt-0.5" />
+            <p className="leading-snug">
+              <strong>싱가포르 객실 안내:</strong> 머큐어 싱가포르 티릿 호텔 객실 번호는 현지 체크인 당일 최종 결정되며 현재는 모두 <strong>'미확정'</strong> 상태입니다.
+            </p>
+          </div>
+        )}
 
         {/* Female Rooms Table */}
         <div>
@@ -246,14 +250,16 @@ export const HotelTab: React.FC<HotelTabProps> = ({
             <table className="w-full text-left">
               <thead className="bg-slate-100 text-slate-700 border-b border-slate-200 font-bold">
                 <tr>
-                  <th className="p-2.5 w-20">객실번호</th>
+                  <th className="p-2.5 w-24">객실번호</th>
                   <th className="p-2.5">배정 인원 (2인 1실)</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-slate-100">
                 {Object.entries(femaleRooms).map(([room, members]) => (
                   <tr key={room} className="hover:bg-slate-50">
-                    <td className="p-2.5 font-bold text-slate-900">{room}</td>
+                    <td className="p-2.5 font-bold text-slate-900">
+                      {activeHotelTab === 'sg' ? '미확정' : room}
+                    </td>
                     <td className="p-2.5 text-slate-800">
                       {members.map((m) => m.nameKr).join(', ')}
                     </td>
@@ -274,14 +280,16 @@ export const HotelTab: React.FC<HotelTabProps> = ({
             <table className="w-full text-left">
               <thead className="bg-slate-100 text-slate-700 border-b border-slate-200 font-bold">
                 <tr>
-                  <th className="p-2.5 w-20">객실번호</th>
+                  <th className="p-2.5 w-24">객실번호</th>
                   <th className="p-2.5">배정 인원 (2인 1실)</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-slate-100">
                 {Object.entries(maleRooms).map(([room, members]) => (
                   <tr key={room} className="hover:bg-slate-50">
-                    <td className="p-2.5 font-bold text-slate-900">{room}</td>
+                    <td className="p-2.5 font-bold text-slate-900">
+                      {activeHotelTab === 'sg' ? '미확정' : room}
+                    </td>
                     <td className="p-2.5 text-slate-800">
                       {members.map((m) => m.nameKr).join(', ')}
                     </td>
