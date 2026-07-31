@@ -162,7 +162,7 @@ export const StudentEmergencyModal: React.FC<StudentEmergencyModalProps> = ({
                   </a>
                 </div>
 
-                {p.allergies && (
+                {p.allergies && p.allergies !== '없음' && (
                   <p className="text-[11px] text-rose-700 font-bold bg-rose-100/50 p-1.5 rounded-lg border border-rose-200/60">
                     ⚠️ 건강/알레르기 특이사항: {p.allergies}
                   </p>

@@ -1,6 +1,7 @@
 import React from 'react';
-import { X, HeartPulse, AlertTriangle, ShieldAlert, Phone, UserCheck, CheckCircle2 } from 'lucide-react';
+import { X, HeartPulse, AlertTriangle, ShieldAlert, Phone } from 'lucide-react';
 import { Participant } from '../types';
+import { INITIAL_PARTICIPANTS } from '../data/campData';
 
 interface HealthNoticeModalProps {
   isOpen: boolean;
@@ -15,10 +16,22 @@ export const HealthNoticeModal: React.FC<HealthNoticeModalProps> = ({
 }) => {
   if (!isOpen) return null;
 
-  // Filter participants who have allergies/symptoms defined (not '없음')
-  const healthCareStudents = participants.filter(
-    (p) => p.allergies && p.allergies !== '없음'
-  );
+  // Strictly filter and merge for Kim Miso & Kim Hyun-kyung only
+  const targetNames = ['김미소', '김현경'];
+  const healthCareStudents = targetNames
+    .map((name) => {
+      const current = participants.find((p) => p.nameKr === name);
+      const initial = INITIAL_PARTICIPANTS.find((p) => p.nameKr === name);
+      if (!current && !initial) return null;
+      return {
+        ...(initial || {}),
+        ...(current || {}),
+        allergies: initial?.allergies || current?.allergies,
+        symptoms: initial?.symptoms || current?.symptoms,
+        precautions: initial?.precautions || current?.precautions,
+      } as Participant;
+    })
+    .filter(Boolean) as Participant[];
 
   return (
     <div className="fixed inset-0 bg-slate-900/60 backdrop-blur-xs z-50 flex items-center justify-center p-4 overflow-y-auto">

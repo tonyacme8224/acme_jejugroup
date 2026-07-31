@@ -30,7 +30,17 @@ export default function App() {
     try {
       const saved = localStorage.getItem('gec_participants');
       const list: Participant[] = saved ? JSON.parse(saved) : INITIAL_PARTICIPANTS;
-      return list.filter((p) => !p.isStaff && p.nameKr !== '박인솔' && p.nameKr !== '김팀장');
+      return list
+        .filter((p) => !p.isStaff && p.nameKr !== '박인솔' && p.nameKr !== '김팀장')
+        .map((p) => {
+          const init = INITIAL_PARTICIPANTS.find((item) => item.id === p.id || item.nameKr === p.nameKr);
+          return {
+            ...p,
+            allergies: init?.allergies || '없음',
+            symptoms: init?.symptoms,
+            precautions: init?.precautions,
+          };
+        });
     } catch {
       return INITIAL_PARTICIPANTS.filter((p) => !p.isStaff && p.nameKr !== '박인솔' && p.nameKr !== '김팀장');
     }

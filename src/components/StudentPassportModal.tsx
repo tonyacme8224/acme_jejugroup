@@ -141,7 +141,7 @@ export const StudentPassportModal: React.FC<StudentPassportModalProps> = ({
             <p className="text-slate-800">
               <strong>보호자 비상연락:</strong> {user.guardianName} ({user.guardianRelation}) - {user.guardianPhone}
             </p>
-            {user.allergies && (
+            {user.allergies && user.allergies !== '없음' && (
               <p className="text-rose-700 font-semibold pt-1">
                 ⚠️ 알레르기/건강특이: {user.allergies}
               </p>

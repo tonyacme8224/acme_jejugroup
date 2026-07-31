@@ -307,7 +307,9 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({
                     <span className="text-slate-600">
                       보호자: {p.guardianName} ({p.guardianRelation}) - {maskPhone(p.guardianPhone)}
                     </span>
-                    {p.allergies && <span className="text-rose-600 font-bold">⚠️ {p.allergies}</span>}
+                    {p.allergies && p.allergies !== '없음' && (
+                      <span className="text-rose-600 font-bold">⚠️ {p.allergies}</span>
+                    )}
                   </div>
                 </div>
               );
