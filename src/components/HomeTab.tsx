@@ -7,7 +7,6 @@ import {
   Phone,
   Plane,
   Building2,
-  FileCheck,
   ShieldCheck,
   UserCheck,
   Clock,
@@ -371,14 +370,6 @@ export const HomeTab: React.FC<HomeTabProps> = ({
           >
             <Users className="w-5 h-5 text-amber-600 mb-1" />
             <span className="text-[11px] font-semibold text-slate-800">객실배정</span>
-          </button>
-
-          <button
-            onClick={() => onNavigateTab('guide')}
-            className="p-2.5 bg-slate-50 hover:bg-slate-100 rounded-xl flex flex-col items-center justify-center transition-colors border border-slate-100"
-          >
-            <FileCheck className="w-5 h-5 text-teal-600 mb-1" />
-            <span className="text-[11px] font-semibold text-slate-800">준비물</span>
           </button>
 
           <button
