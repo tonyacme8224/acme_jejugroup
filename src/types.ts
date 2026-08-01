@@ -1,4 +1,4 @@
-export type TabType = 'home' | 'schedule' | 'guide' | 'hotel' | 'more';
+export type TabType = 'home' | 'schedule' | 'guide' | 'hotel' | 'flightMeal' | 'more';
 
 export interface Participant {
   id: string;

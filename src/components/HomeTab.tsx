@@ -22,6 +22,7 @@ import {
   HeartPulse,
   ShieldAlert,
   Lock,
+  Utensils,
 } from 'lucide-react';
 
 interface HomeTabProps {
@@ -33,6 +34,7 @@ interface HomeTabProps {
   currentVerifiedUser: Participant | null;
   isAdminLoggedIn: boolean;
   onSelectScheduleDay?: (dayNumber: number) => void;
+  onSelectScheduleMode?: (mode: 'all' | 'class' | 'flight') => void;
 }
 
 export const HomeTab: React.FC<HomeTabProps> = ({
@@ -44,6 +46,7 @@ export const HomeTab: React.FC<HomeTabProps> = ({
   currentVerifiedUser,
   isAdminLoggedIn,
   onSelectScheduleDay,
+  onSelectScheduleMode,
 }) => {
   // Selected preview date for "Today's Schedule" card
   // Default to Day 1 (Aug 10) or current camp date if within range
@@ -145,7 +148,10 @@ export const HomeTab: React.FC<HomeTabProps> = ({
         </div>
 
         <button
-          onClick={() => onNavigateTab('schedule')}
+          onClick={() => {
+            if (onSelectScheduleMode) onSelectScheduleMode('flight');
+            onNavigateTab('schedule');
+          }}
           className="w-full mt-3 py-2 bg-slate-900 hover:bg-slate-800 text-white text-xs font-semibold rounded-xl flex items-center justify-center space-x-1 transition-colors"
         >
           <span>출국 집합 및 세부사항 확인</span>
@@ -215,7 +221,34 @@ export const HomeTab: React.FC<HomeTabProps> = ({
         </button>
       </div>
 
-      {/* 4. HEALTH & ALLERGY NOTICE QUICK CARD */}
+      {/* 4. FLIGHT MEAL STATUS BANNER CARD */}
+      <div className="bg-gradient-to-r from-blue-900 via-indigo-900 to-slate-900 text-white rounded-2xl p-4 shadow-sm space-y-2 border border-blue-800/80">
+        <div className="flex items-center justify-between">
+          <div className="flex items-center space-x-2.5">
+            <div className="p-2 bg-blue-500/20 text-blue-300 rounded-xl border border-blue-400/30">
+              <Utensils className="w-5 h-5" />
+            </div>
+            <div>
+              <h3 className="text-sm font-black tracking-tight flex items-center gap-1.5">
+                <span>기내식 신청현황</span>
+                <span className="bg-emerald-500 text-white text-[9px] px-1.5 py-0.2 rounded font-bold">
+                  22명 완료
+                </span>
+              </h3>
+              <p className="text-[11px] text-blue-200/90 font-medium">출국편(스쿠트) & 귀국편(티웨이) 메뉴별 조사 내역</p>
+            </div>
+          </div>
+          <button
+            onClick={() => onNavigateTab('flightMeal')}
+            className="bg-white text-blue-900 font-extrabold text-xs px-3 py-1.5 rounded-xl shadow-xs hover:bg-blue-50 transition-colors shrink-0 flex items-center gap-1"
+          >
+            <span>확인하기</span>
+            <ChevronRight className="w-3.5 h-3.5" />
+          </button>
+        </div>
+      </div>
+
+      {/* 5. HEALTH & ALLERGY NOTICE QUICK CARD */}
       <div className="bg-gradient-to-r from-rose-500 to-amber-500 text-white rounded-2xl p-4 shadow-sm space-y-2">
         <div className="flex items-center justify-between">
           <div className="flex items-center space-x-2">
@@ -295,7 +328,10 @@ export const HomeTab: React.FC<HomeTabProps> = ({
         <h3 className="text-sm font-bold text-slate-900 mb-3">빠른 메뉴</h3>
         <div className="grid grid-cols-4 gap-2 text-center">
           <button
-            onClick={() => onNavigateTab('schedule')}
+            onClick={() => {
+              if (onSelectScheduleMode) onSelectScheduleMode('all');
+              onNavigateTab('schedule');
+            }}
             className="p-2.5 bg-slate-50 hover:bg-slate-100 rounded-xl flex flex-col items-center justify-center transition-colors border border-slate-100"
           >
             <Calendar className="w-5 h-5 text-indigo-600 mb-1" />
@@ -303,7 +339,18 @@ export const HomeTab: React.FC<HomeTabProps> = ({
           </button>
 
           <button
-            onClick={() => onNavigateTab('schedule')}
+            onClick={() => onNavigateTab('flightMeal')}
+            className="p-2.5 bg-slate-50 hover:bg-slate-100 rounded-xl flex flex-col items-center justify-center transition-colors border border-slate-100"
+          >
+            <Utensils className="w-5 h-5 text-indigo-600 mb-1" />
+            <span className="text-[11px] font-semibold text-slate-800">기내식</span>
+          </button>
+
+          <button
+            onClick={() => {
+              if (onSelectScheduleMode) onSelectScheduleMode('flight');
+              onNavigateTab('schedule');
+            }}
             className="p-2.5 bg-slate-50 hover:bg-slate-100 rounded-xl flex flex-col items-center justify-center transition-colors border border-slate-100"
           >
             <Plane className="w-5 h-5 text-sky-600 mb-1" />

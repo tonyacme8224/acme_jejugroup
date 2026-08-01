@@ -12,6 +12,7 @@ import { HomeTab } from './components/HomeTab';
 import { ScheduleTab } from './components/ScheduleTab';
 import { LivingGuideTab } from './components/LivingGuideTab';
 import { HotelTab } from './components/HotelTab';
+import { FlightMealTab } from './components/FlightMealTab';
 import { AdminPanel } from './components/AdminPanel';
 import { AuthModal } from './components/AuthModal';
 import { StudentPassportModal } from './components/StudentPassportModal';
@@ -19,11 +20,12 @@ import { NoticeModal } from './components/NoticeModal';
 import { PassportListModal } from './components/PassportListModal';
 import { StudentEmergencyModal } from './components/StudentEmergencyModal';
 import { HealthNoticeModal } from './components/HealthNoticeModal';
-import { UserCheck, ShieldCheck, Lock, Phone, BookOpen, AlertTriangle, FileText, ChevronRight, HeartPulse } from 'lucide-react';
+import { UserCheck, ShieldCheck, Lock, Phone, BookOpen, AlertTriangle, FileText, ChevronRight, HeartPulse, Utensils } from 'lucide-react';
 
 export default function App() {
   const [activeTab, setActiveTab] = useState<TabType>('home');
   const [selectedScheduleDay, setSelectedScheduleDay] = useState<number>(1);
+  const [selectedScheduleMode, setSelectedScheduleMode] = useState<'all' | 'class' | 'flight'>('all');
 
   // Participants persistent state
   const [participants, setParticipants] = useState<Participant[]>(() => {
@@ -184,11 +186,20 @@ export default function App() {
               onOpenHealthModal={() => setIsHealthModalOpen(true)}
               currentVerifiedUser={currentVerifiedUser}
               isAdminLoggedIn={isAdminLoggedIn}
-              onSelectScheduleDay={(dayNum) => setSelectedScheduleDay(dayNum)}
+              onSelectScheduleDay={(dayNum) => {
+                setSelectedScheduleDay(dayNum);
+                setSelectedScheduleMode('all');
+              }}
+              onSelectScheduleMode={(mode) => setSelectedScheduleMode(mode)}
             />
           )}
 
-          {activeTab === 'schedule' && <ScheduleTab initialDay={selectedScheduleDay} />}
+          {activeTab === 'schedule' && (
+            <ScheduleTab
+              initialDay={selectedScheduleDay}
+              initialMode={selectedScheduleMode}
+            />
+          )}
 
           {activeTab === 'guide' && <LivingGuideTab />}
 
@@ -198,6 +209,8 @@ export default function App() {
               currentVerifiedUser={currentVerifiedUser}
             />
           )}
+
+          {activeTab === 'flightMeal' && <FlightMealTab onNavigateHome={() => setActiveTab('home')} />}
 
           {activeTab === 'more' && (
             <div>
@@ -212,6 +225,26 @@ export default function App() {
                 />
               ) : (
                 <div className="space-y-3 pb-20">
+                  {/* Flight Meal Status Quick Card */}
+                  <div className="bg-white rounded-2xl p-4 border border-slate-200 shadow-xs space-y-2">
+                    <div className="flex items-center space-x-2">
+                      <div className="w-8 h-8 rounded-xl bg-blue-100 text-blue-800 flex items-center justify-center font-bold">
+                        <Utensils className="w-4 h-4 text-blue-600" />
+                      </div>
+                      <div>
+                        <h3 className="text-sm font-black text-slate-900">기내식 신청현황</h3>
+                        <p className="text-[11px] text-slate-500">출국편(스쿠트) & 귀국편(티웨이) 메뉴 및 학생별 내역</p>
+                      </div>
+                    </div>
+                    <button
+                      onClick={() => setActiveTab('flightMeal')}
+                      className="w-full py-2.5 bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs rounded-xl transition-colors flex items-center justify-center space-x-1"
+                    >
+                      <span>기내식 신청현황 보기</span>
+                      <ChevronRight className="w-4 h-4" />
+                    </button>
+                  </div>
+
                   {/* Health & Allergy Quick Card */}
                   <div className="bg-white rounded-2xl p-4 border border-slate-200 shadow-xs space-y-2">
                     <div className="flex items-center space-x-2">

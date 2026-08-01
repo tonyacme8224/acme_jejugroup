@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { DAY_SCHEDULES, CLASS_TIMETABLE, FLIGHTS, CAMP_INFO } from '../data/campData';
 import { DaySchedule, ClassTimetableItem } from '../types';
 import {
@@ -22,12 +22,19 @@ import {
 
 interface ScheduleTabProps {
   initialDay?: number;
+  initialMode?: 'all' | 'class' | 'flight';
 }
 
-export const ScheduleTab: React.FC<ScheduleTabProps> = ({ initialDay = 1 }) => {
-  const [viewMode, setViewMode] = useState<'all' | 'class' | 'flight'>('all');
+export const ScheduleTab: React.FC<ScheduleTabProps> = ({ initialDay = 1, initialMode = 'all' }) => {
+  const [viewMode, setViewMode] = useState<'all' | 'class' | 'flight'>(initialMode);
   const [expandedDay, setExpandedDay] = useState<number | null>(initialDay);
   const [copiedFlight, setCopiedFlight] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (initialMode) {
+      setViewMode(initialMode);
+    }
+  }, [initialMode]);
 
   const toggleDay = (dayNum: number) => {
     setExpandedDay(expandedDay === dayNum ? null : dayNum);

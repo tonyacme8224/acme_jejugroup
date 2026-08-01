@@ -1,6 +1,6 @@
 import React from 'react';
 import { TabType } from '../types';
-import { Home, Calendar, Building, ShieldAlert, Menu } from 'lucide-react';
+import { Home, Calendar, Building, ShieldAlert, Menu, Utensils } from 'lucide-react';
 
 interface BottomNavProps {
   activeTab: TabType;
@@ -16,8 +16,8 @@ export const BottomNav: React.FC<BottomNavProps> = ({
   const tabs: { id: TabType; label: string; icon: React.ReactNode }[] = [
     { id: 'home', label: '홈', icon: <Home className="w-5 h-5" /> },
     { id: 'schedule', label: '일정', icon: <Calendar className="w-5 h-5" /> },
+    { id: 'flightMeal', label: '기내식', icon: <Utensils className="w-5 h-5" /> },
     { id: 'guide', label: '생활안내', icon: <ShieldAlert className="w-5 h-5" /> },
-    { id: 'hotel', label: '숙소', icon: <Building className="w-5 h-5" /> },
     { id: 'more', label: isAdminLoggedIn ? '관리자' : '더보기', icon: <Menu className="w-5 h-5" /> },
   ];
 
