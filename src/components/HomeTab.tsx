@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { CAMP_INFO, DAY_SCHEDULES } from '../data/campData';
 import { TabType, Participant } from '../types';
+import { CompanyLogo } from './CompanyLogo';
 import {
   Calendar,
   Phone,
@@ -76,7 +77,7 @@ export const HomeTab: React.FC<HomeTabProps> = ({
             대외비
           </span>
           <span className="text-xs font-extrabold text-rose-900 leading-tight">
-            본핸드북 링크 외부유출 절대금지
+            본 핸드북 링크 외부유출 절대금지 (참가학생에 공유금지)
           </span>
         </div>
         <ShieldAlert className="w-4 h-4 text-rose-600 shrink-0" />
@@ -358,6 +359,9 @@ export const HomeTab: React.FC<HomeTabProps> = ({
           </button>
         </div>
       </div>
+
+      {/* FOOTER COMPANY LOGO */}
+      <CompanyLogo />
     </div>
   );
 };
