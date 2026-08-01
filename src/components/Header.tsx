@@ -29,6 +29,9 @@ export const Header: React.FC<HeaderProps> = ({
           <div>
             <h1 className="text-sm font-bold leading-tight tracking-tight text-white flex items-center gap-1.5">
               <span>{CAMP_INFO.titleKr}</span>
+              <span className="bg-rose-600 text-white font-extrabold text-[9px] px-1.5 py-0.2 rounded shrink-0">
+                대외비
+              </span>
             </h1>
             <p className="text-[10px] text-slate-400 tracking-wider uppercase font-medium">
               MALAYSIA · SINGAPORE 2026

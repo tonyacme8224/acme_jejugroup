@@ -19,6 +19,8 @@ import {
   Copy,
   Check,
   HeartPulse,
+  ShieldAlert,
+  Lock,
 } from 'lucide-react';
 
 interface HomeTabProps {
@@ -66,6 +68,20 @@ export const HomeTab: React.FC<HomeTabProps> = ({
 
   return (
     <div id="home-tab-content" className="space-y-4 pb-20">
+      {/* CONFIDENTIAL NOTICE BANNER */}
+      <div className="bg-rose-50 border border-rose-200/90 rounded-xl p-3 px-3.5 flex items-center justify-between shadow-xs">
+        <div className="flex items-center space-x-2.5">
+          <span className="bg-rose-600 text-white font-black text-xs px-2.5 py-1 rounded-md tracking-wide shrink-0 shadow-2xs flex items-center gap-1">
+            <Lock className="w-3 h-3 inline" />
+            대외비
+          </span>
+          <span className="text-xs font-extrabold text-rose-900 leading-tight">
+            본핸드북 링크 외부유출 절대금지
+          </span>
+        </div>
+        <ShieldAlert className="w-4 h-4 text-rose-600 shrink-0" />
+      </div>
+
       {/* 1. TOP BRAND HERO CARD */}
       <div className="bg-gradient-to-br from-slate-900 via-indigo-950 to-slate-900 text-white rounded-2xl p-5 shadow-lg border border-slate-800 relative overflow-hidden">
         <div className="absolute -right-6 -bottom-6 w-32 h-32 bg-emerald-500/10 rounded-full blur-2xl pointer-events-none" />
