@@ -70,7 +70,7 @@ export const HomeTab: React.FC<HomeTabProps> = ({
       <div className="bg-gradient-to-br from-slate-900 via-indigo-950 to-slate-900 text-white rounded-2xl p-5 shadow-lg border border-slate-800 relative overflow-hidden">
         <div className="absolute -right-6 -bottom-6 w-32 h-32 bg-emerald-500/10 rounded-full blur-2xl pointer-events-none" />
         <div className="absolute right-4 top-4 bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 text-[10px] px-2.5 py-1 rounded-full font-bold tracking-wider uppercase">
-          11박 12일 연수
+          10박 12일 연수
         </div>
 
         <p className="text-xs font-semibold text-emerald-400 tracking-wider uppercase mb-1">

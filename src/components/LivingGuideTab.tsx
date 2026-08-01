@@ -1,22 +1,17 @@
 import React, { useState, useEffect } from 'react';
-import { CHECKLIST, CAMP_RULES, INSURANCE_ITEMS } from '../data/campData';
-import { ChecklistCategory } from '../types';
+import { CHECKLIST, CAMP_RULES } from '../data/campData';
 import {
   ShieldAlert,
   CheckSquare,
   Square,
-  ShieldCheck,
   Luggage,
-  Sparkles,
-  Info,
   RotateCcw,
   Zap,
   Globe,
-  AlertTriangle,
 } from 'lucide-react';
 
 export const LivingGuideTab: React.FC = () => {
-  const [activeSubTab, setActiveSubTab] = useState<'rules' | 'checklist' | 'insurance' | 'local'>('rules');
+  const [activeSubTab, setActiveSubTab] = useState<'rules' | 'checklist' | 'local'>('rules');
 
   // Checklist checked state saved in localStorage
   const [checkedItems, setCheckedItems] = useState<{ [id: string]: boolean }>(() => {
@@ -69,14 +64,6 @@ export const LivingGuideTab: React.FC = () => {
           }`}
         >
           준비물
-        </button>
-        <button
-          onClick={() => setActiveSubTab('insurance')}
-          className={`flex-1 py-2 rounded-xl transition-all ${
-            activeSubTab === 'insurance' ? 'bg-slate-900 text-white shadow-xs' : 'hover:text-slate-900'
-          }`}
-        >
-          여행자보험
         </button>
         <button
           onClick={() => setActiveSubTab('local')}
@@ -134,7 +121,7 @@ export const LivingGuideTab: React.FC = () => {
             <div className="grid grid-cols-2 gap-2 text-xs">
               <div className="bg-slate-50 p-2.5 rounded-xl border border-slate-100">
                 <span className="text-[10px] text-slate-400 font-medium">위탁 수하물</span>
-                <p className="font-extrabold text-slate-900 mt-0.5">18kg 미만 (1개)</p>
+                <p className="font-extrabold text-slate-900 mt-0.5">20kg 이하 (1개)</p>
               </div>
               <div className="bg-slate-50 p-2.5 rounded-xl border border-slate-100">
                 <span className="text-[10px] text-slate-400 font-medium">기내 수하물</span>
@@ -223,48 +210,7 @@ export const LivingGuideTab: React.FC = () => {
         </div>
       )}
 
-      {/* SUBTAB 3: TRAVEL INSURANCE */}
-      {activeSubTab === 'insurance' && (
-        <div className="bg-white rounded-2xl p-4 border border-slate-200 shadow-xs space-y-3">
-          <div className="border-b border-slate-100 pb-2">
-            <div className="flex items-center space-x-2">
-              <ShieldCheck className="w-5 h-5 text-emerald-600" />
-              <h3 className="text-sm font-bold text-slate-900">해외 여행자보험 보장 내용</h3>
-            </div>
-            <p className="text-xs text-slate-500 mt-1">
-              캠프 참가자 전원 DB손해보험 / 현대해상 단체 여행자보험 가입 완료
-            </p>
-          </div>
-
-          <div className="border border-slate-200 rounded-xl overflow-hidden text-xs">
-            <table className="w-full text-left">
-              <thead className="bg-slate-100 text-slate-700 border-b border-slate-200 font-bold">
-                <tr>
-                  <th className="p-2.5">보장 항목</th>
-                  <th className="p-2.5 text-right">보장 한도액</th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-slate-100">
-                {INSURANCE_ITEMS.map((item, idx) => (
-                  <tr key={idx} className="hover:bg-slate-50">
-                    <td className="p-2.5 font-semibold text-slate-800">{item.item}</td>
-                    <td className="p-2.5 text-right font-bold text-emerald-800">{item.amount}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-
-          <div className="bg-slate-50 p-3 rounded-xl border border-slate-100 text-xs text-slate-600 space-y-1">
-            <p className="font-bold text-slate-900">※ 사고 및 병원 진료 시 절차</p>
-            <p>1. 인솔자 및 운영 담당자에게 즉시 알림</p>
-            <p>2. 현지 협력 병원 이송 및 진단서/영수증 원본 수령</p>
-            <p>3. 귀국 후 보상 청구서 제출 및 보험금 지급 처리</p>
-          </div>
-        </div>
-      )}
-
-      {/* SUBTAB 4: LOCAL INFO & ESIM */}
+      {/* SUBTAB 3: LOCAL INFO & ESIM */}
       {activeSubTab === 'local' && (
         <div className="space-y-3 text-xs">
           <div className="bg-white rounded-2xl p-4 border border-slate-200 space-y-3">

@@ -28,15 +28,17 @@ export interface Participant {
 
 export interface DaySchedule {
   dayNumber: number;
-  dateStr: string; // "8월 10일 월요일"
+  dateStr: string; // "8월 10일(월)"
   dateFormatted: string; // "2026-08-10"
-  title: string; // "출국 및 오리엔테이션"
-  tag: '출국' | '교육일' | '싱가포르' | '귀국';
-  location: '제주/말레이시아' | '조호바루' | '싱가포르' | '제주';
+  title: string;
+  tag: string;
+  country: string; // "말레이시아" | "싱가포르" | "제주"
+  location: string;
   items: {
     time?: string;
     activity: string;
     note?: string;
+    category?: '수업' | '문화체험' | '식사' | '이동' | '기업·기관' | '활동' | '기타';
     isHighlight?: boolean;
   }[];
 }
