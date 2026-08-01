@@ -141,10 +141,15 @@ export const FlightMealTab: React.FC<FlightMealTabProps> = () => {
         </div>
 
         {/* Top Notice Banner */}
-        <div className="bg-slate-800/80 border border-slate-700/80 rounded-xl p-3 text-xs text-slate-300 leading-relaxed flex items-start space-x-2.5 mt-3">
-          <Info className="w-4 h-4 text-indigo-400 shrink-0 mt-0.5" />
-          <p className="font-medium text-slate-200">
-            아래 표는 학생별 기내식 신청 현황입니다. 상단 메뉴 사진과 번호를 참고하여 출국편 및 귀국편 신청 메뉴를 확인할 수 있습니다.
+        <div className="bg-slate-800/80 border border-slate-700/80 rounded-xl p-3 text-xs text-slate-300 leading-relaxed space-y-1.5 mt-3">
+          <div className="flex items-start space-x-2.5">
+            <Info className="w-4 h-4 text-indigo-400 shrink-0 mt-0.5" />
+            <p className="font-medium text-slate-200">
+              아래 표는 학생별 기내식 신청 현황입니다. 상단 메뉴 사진과 번호를 참고하여 출국편 및 귀국편 신청 메뉴를 확인할 수 있습니다.
+            </p>
+          </div>
+          <p className="text-[11px] text-amber-300/90 font-medium pl-6">
+            ※ 게시된 식사 이미지는 이해를 돕기 위한 예시 이미지이며, 실제 항공사 사정에 따라 제공되는 기내식의 실제 모습과 차이가 있을 수 있습니다.
           </p>
         </div>
       </div>
@@ -556,6 +561,9 @@ export const FlightMealTab: React.FC<FlightMealTabProps> = () => {
               </h4>
               <p className="text-xs text-slate-600 font-medium leading-relaxed">
                 {previewMeal.meal.description}
+              </p>
+              <p className="text-[10px] text-slate-400 font-medium">
+                * 위 이미지는 연출된 이미지이며 실제 기내식과는 차이가 있을 수 있습니다.
               </p>
             </div>
 
