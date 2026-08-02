@@ -30,21 +30,11 @@ export default function App() {
   // Participants persistent state
   const [participants, setParticipants] = useState<Participant[]>(() => {
     try {
-      const saved = localStorage.getItem('gec_participants');
-      const list: Participant[] = saved ? JSON.parse(saved) : INITIAL_PARTICIPANTS;
-      return list
-        .filter((p) => !p.isStaff && p.nameKr !== '박인솔' && p.nameKr !== '김팀장')
-        .map((p) => {
-          const init = INITIAL_PARTICIPANTS.find((item) => item.id === p.id || item.nameKr === p.nameKr);
-          return {
-            ...p,
-            allergies: init?.allergies || '없음',
-            symptoms: init?.symptoms,
-            precautions: init?.precautions,
-          };
-        });
+      const saved = localStorage.getItem('gec_participants_v3');
+      if (saved) return JSON.parse(saved);
+      return INITIAL_PARTICIPANTS;
     } catch {
-      return INITIAL_PARTICIPANTS.filter((p) => !p.isStaff && p.nameKr !== '박인솔' && p.nameKr !== '김팀장');
+      return INITIAL_PARTICIPANTS;
     }
   });
 
@@ -89,7 +79,7 @@ export default function App() {
   // Sync state to localStorage
   useEffect(() => {
     try {
-      localStorage.setItem('gec_participants', JSON.stringify(participants));
+      localStorage.setItem('gec_participants_v3', JSON.stringify(participants));
     } catch (e) {
       console.error(e);
     }
